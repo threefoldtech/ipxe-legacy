@@ -565,7 +565,6 @@ static int shell_banner ( void ) {
  * @ret rc		Return status code
  */
 int ipxe ( struct net_device *netdev ) {
-	struct feature *feature;
 	struct image *image;
 	char *scriptlet;
 	int rc;
@@ -583,11 +582,7 @@ int ipxe ( struct net_device *netdev ) {
 	 *
 	 */
 	printf ( NORMAL "\n\n" PRODUCT_NAME "\n" BOLD PRODUCT_SHORT_NAME " %s"
-		 NORMAL " -- " PRODUCT_TAG_LINE " -- "
-		 CYAN PRODUCT_URI NORMAL "\nFeatures:", product_version );
-	for_each_table_entry ( feature, FEATURES )
-		printf ( " %s", feature->name );
-	printf ( "\n" );
+		 NORMAL " -- " CYAN PRODUCT_URI NORMAL "\n", product_version );
 
 	/* Boot system */
 	if ( ( image = first_image() ) != NULL ) {
