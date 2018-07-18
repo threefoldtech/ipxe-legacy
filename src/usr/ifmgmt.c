@@ -43,7 +43,7 @@ FILE_LICENCE ( GPL2_OR_LATER_OR_UBDL );
  */
 
 /** Default time to wait for link-up */
-#define LINK_WAIT_TIMEOUT ( 15 * TICKS_PER_SEC )
+#define LINK_WAIT_TIMEOUT ( 1 * TICKS_PER_SEC )
 
 /** Default unsuccessful configuration status code */
 #define EADDRNOTAVAIL_CONFIG __einfo_error ( EINFO_EADDRNOTAVAIL_CONFIG )
@@ -226,7 +226,7 @@ int iflinkwait ( struct net_device *netdev, unsigned long timeout ) {
 		return 0;
 
 	/* Wait for link-up */
-	printf ( "Waiting for link-up on %s", netdev->name );
+	printf ( "Waiting for %s [%s] ", netdev->name, netdev_addr ( netdev ) );
 	return ifpoller_wait ( netdev, NULL, timeout, iflinkwait_progress );
 }
 
