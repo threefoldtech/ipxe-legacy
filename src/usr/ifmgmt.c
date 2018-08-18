@@ -43,7 +43,7 @@ FILE_LICENCE ( GPL2_OR_LATER_OR_UBDL );
  */
 
 /** Default time to wait for link-up */
-#define LINK_WAIT_TIMEOUT ( 6 * TICKS_PER_SEC )
+#define LINK_WAIT_TIMEOUT ( 25 * TICKS_PER_SEC )
 
 /** Default unsuccessful configuration status code */
 #define EADDRNOTAVAIL_CONFIG __einfo_error ( EINFO_EADDRNOTAVAIL_CONFIG )
