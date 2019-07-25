@@ -458,6 +458,7 @@ static struct pe_section * process_section ( struct elf_file *elf,
 					     struct pe_header *pe_header ) {
 	struct pe_section *new;
 	const char *name;
+	size_t name_len;
 	size_t section_memsz;
 	size_t section_filesz;
 	unsigned long code_start;
@@ -494,7 +495,10 @@ static struct pe_section * process_section ( struct elf_file *elf,
 	memset ( new, 0, sizeof ( *new ) + section_filesz );
 
 	/* Fill in section header details */
-	strncpy ( ( char * ) new->hdr.Name, name, sizeof ( new->hdr.Name ) );
+	name_len = strlen ( name );
+	if ( name_len > sizeof ( new->hdr.Name ) )
+		name_len = sizeof ( new->hdr.Name );
+	memcpy ( new->hdr.Name, name, name_len );
 	new->hdr.Misc.VirtualSize = section_memsz;
 	new->hdr.VirtualAddress = shdr->sh_addr;
 	new->hdr.SizeOfRawData = section_filesz;
@@ -636,6 +640,7 @@ static void process_reloc ( struct elf_file *elf, const Elf_Shdr *shdr,
 		case ELF_MREL ( EM_ARM, R_ARM_THM_JUMP24 ) :
 		case ELF_MREL ( EM_ARM, R_ARM_V4BX ):
 		case ELF_MREL ( EM_X86_64, R_X86_64_PC32 ) :
+		case ELF_MREL ( EM_X86_64, R_X86_64_PLT32 ) :
 		case ELF_MREL ( EM_AARCH64, R_AARCH64_CALL26 ) :
 		case ELF_MREL ( EM_AARCH64, R_AARCH64_JUMP26 ) :
 		case ELF_MREL ( EM_AARCH64, R_AARCH64_ADR_PREL_LO21 ) :
